@@ -27,7 +27,7 @@
         tools:text="MGevork25" />
 
     <TextView
-        android:id="@+id/tvTweetBody"
+        android:id="@+id/tvTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
