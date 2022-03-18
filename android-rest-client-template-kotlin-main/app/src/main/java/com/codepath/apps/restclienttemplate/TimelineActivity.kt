@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -57,9 +58,26 @@ class TimelineActivity : AppCompatActivity() {
     // Handles clicks on menu item
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.compose) {
-
+            val intent = Intent(this, ComposeActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    // This method is called when we come back from ComposeActivity
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (requestCode == RESULT_OK && requestCode == REQUEST_CODE) {
+
+            val tweet = data?.getParcelableExtra("tweet") as Tweet
+
+            tweets.add(0, tweet)
+
+            adapter.notifyItemInserted(0)
+            rvTweets.smoothScrollToPosition(0)
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     fun populateHomeTimeline() {
@@ -100,5 +118,6 @@ class TimelineActivity : AppCompatActivity() {
 
     companion object {
         val TAG = "TimelineActivity"
+        val REQUEST_CODE = 10
     }
 }
